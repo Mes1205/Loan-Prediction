@@ -2,7 +2,6 @@
 LoanIQ — Streamlit App
 Memuat hasil model langsung dari file export notebook (ga_best_chrom.npz,
 ann_model.pt, scaler.pkl, pipeline_metrics.npz, ga_history.npz).
-Tidak ada training ulang sama sekali.
 """
 
 import io
@@ -1017,18 +1016,6 @@ def render_analysis_page(p):
     st.markdown(f"""
         <div class="page-title">
             <div class="page-title-main">Analisis & Training Model</div>
-            <div class="page-title-sub">
-                Hasil pipeline dari notebook UTS_SoftComp — dimuat langsung dari file export,
-                tanpa training ulang.
-            </div>
-        </div>""", unsafe_allow_html=True)
-
-    st.markdown(f"""
-        <div style="background:linear-gradient(135deg,#ECFDF5 0%,#D1FAE5 100%);
-                    border:2px solid #10B981;border-radius:14px;padding:14px 20px;margin-bottom:20px;">
-            <span style="font-size:1rem;font-weight:700;color:#065F46;">
-                ✅ Semua model dimuat dari file export notebook — tidak ada training ulang
-            </span>
         </div>""", unsafe_allow_html=True)
 
     # Dataset summary
@@ -1152,16 +1139,6 @@ def main():
         pipeline = load_pipeline()
     except FileNotFoundError as e:
         st.error(str(e))
-        st.markdown("""
-        **Langkah-langkah:**
-        1. Buka notebook `UTS_SoftComp_(5).ipynb` di Google Colab
-        2. Jalankan semua cell dari atas
-        3. Jalankan cell **EXPORT** paling bawah — akan muncul dialog download
-        4. Download semua 5 file: `ga_best_chrom.npz`, `ann_model.pt`, `scaler.pkl`,
-           `pipeline_metrics.npz`, `ga_history.npz`
-        5. Letakkan semua file tersebut + `data_train.csv` di folder yang sama dengan `app.py`
-        6. Jalankan ulang: `streamlit run app.py`
-        """)
         st.stop()
     except Exception as e:
         st.error(f"❌ Gagal memuat pipeline: {e}")
